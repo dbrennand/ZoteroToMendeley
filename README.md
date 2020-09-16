@@ -23,4 +23,4 @@ python_version = "3.8"
 
 ## Usage
 
-`python migrate.py /path/to/Zotero/Export/Directory`
+`python migrate.py /path/to/Zotero/Export/MyLibrary.bib`

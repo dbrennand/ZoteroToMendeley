@@ -13,19 +13,14 @@ def load_bibtex_file(file_path: str):
         return bibtexparser.bparser.BibTexParser(common_strings=True, ignore_nonstandard_types=False).parse_file(bibtex_file)
 
 
-def main(bibtex_export_dir: str):
+def main(bibtex_path: str):
     """
     Entrypoint for migrate.py
-    :params bibtex_export_dir: The PATH to the directory on the local machine to the BibTex (.bib) file and PDF export file(s).
+    :params bibtex_path: The PATH to the BibTex (.bib) file on the local machine.
     """
-    # Find the BibTex (.bib) file
-    bibtex_file_name = os.listdir(bibtex_export_dir)[-1]
-    # Check it's the BibTex (.bib) file
-    if not bibtex_file_name.endswith(".bib"):
-        raise ValueError("BibTex file wasn't found correctly.")
     # Load BibTex file and parse it
     bibtex_db = load_bibtex_file(
-        file_path=f"{bibtex_export_dir}/{bibtex_file_name}")
+        file_path=bibtex_path)
     # Obtain every entry key name
     bibtex_keys = bibtex_db.entries_dict.keys()
     # For all entires in the BibTex file. Remove or replace the "{", "}", "\\textbar" and "\\&amp;" characters in the title field
@@ -51,7 +46,7 @@ def main(bibtex_export_dir: str):
         bibtex_db.entries_dict[key].update(bibtex_entry)
         print(f"After update: {bibtex_db.entries_dict[key]}")
     # Write out new BibTex file
-    with open(f"{bibtex_export_dir}/bibtex.bib", "w", encoding="utf-8") as bibtex_file:
+    with open("bibtex.bib", "w", encoding="utf-8") as bibtex_file:
         bibtexparser.dump(bibtex_db, bibtex_file)
 
 
