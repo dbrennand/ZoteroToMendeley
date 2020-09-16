@@ -1,6 +1,5 @@
 import fire
 import bibtexparser
-import os
 
 
 def load_bibtex_file(file_path: str):
